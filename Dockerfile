@@ -14,6 +14,8 @@ ARG SHA256_HASH="0b3d46b0b25170f99e3e29c9fc6a2e5235b0449fecbdad902583c919724aa6e
 
 ENV GID=991 UID=991 CRON_PERIOD=15m UPLOAD_MAX_SIZE=25M LOG_TO_STDOUT=false MEMORY_LIMIT=128M
 
+SHELL ["/bin/ash", "-o", "pipefail", "-c"]
+
 RUN echo "@community http://nl.alpinelinux.org/alpine/v3.8/community" >> /etc/apk/repositories \
  && apk -U upgrade \
  && apk add -t build-dependencies \
