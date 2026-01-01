@@ -8,12 +8,11 @@ sed -i "s/<MEMORY_LIMIT>/$MEMORY_LIMIT/g" /etc/php7/php-fpm.conf
 # Selfoss custom configuration file
 rm -f /selfoss/config.ini
 
-if [ -e /selfoss/data/config.ini ]; then
-  cp /selfoss/data/config.ini /selfoss/config.ini
-else
-  cp "${SELFOSS_CONFIG_FILE:-/selfoss/config-example.ini}" /selfoss/data/config.ini
-  cp "${SELFOSS_CONFIG_FILE:-/selfoss/config-example.ini}" /selfoss/config.ini
+if [ ! -e /selfoss/data/config.ini ]; then
+   cp "${SELFOSS_CONFIG_FILE:-/selfoss/config-example.ini}" /selfoss/data/config.ini
 fi
+
+cp /selfoss/data/config.ini /selfoss/config.ini
 
 # Init data dir
 if [ ! "$(ls -Ad /selfoss/data/*/)" ]; then
