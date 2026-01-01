@@ -6,7 +6,6 @@ sed -i "s/<UPLOAD_MAX_SIZE>/$UPLOAD_MAX_SIZE/g" /etc/php7/php-fpm.conf /etc/ngin
 sed -i "s/<MEMORY_LIMIT>/$MEMORY_LIMIT/g" /etc/php7/php-fpm.conf
 
 # Selfoss custom configuration file
-sed -i "s/lkjl1289/`cat \/dev\/urandom | tr -dc 'a-zA-Z' | fold -w 20 | head -n 1`/g" /selfoss/defaults.ini
 rm -f /selfoss/config.ini
 
 if [ -e /selfoss/data/config.ini ]; then
