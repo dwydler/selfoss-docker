@@ -1,7 +1,13 @@
 FROM alpine:3.8
 
-LABEL description "Multipurpose rss reader, live stream, mashup, aggregation web application" \
-      maintainer="Hardware <contact@meshup.net>"
+LABEL maintainer="Daniel Wydler"
+LABEL org.opencontainers.image.authors="Daniel Wydler"
+LABEL org.opencontainers.image.description="Up-to-date Selfoss, a multipurpose RSS reader, live stream, mashup, aggregation web application. "
+LABEL org.opencontainers.image.documentation="https://github.com/dwydler/selfoss-docker/blob/master/README.md"
+LABEL org.opencontainers.image.source="https://github.com/dwydler/selfoss-docker"
+LABEL org.opencontainers.image.title="wydler/selfoss"
+LABEL org.opencontainers.image.url="https://github.com/dwydler/selfoss-docker"
+
 
 ARG VERSION=2.18
 ARG SHA256_HASH="0b3d46b0b25170f99e3e29c9fc6a2e5235b0449fecbdad902583c919724aa6ed"
@@ -40,7 +46,7 @@ RUN echo "@community http://nl.alpinelinux.org/alpine/v3.8/community" >> /etc/ap
     php7-xml \
     php7-xmlwriter \
     tini@community \
- && wget -q https://github.com/SSilence/selfoss/releases/download/$VERSION/selfoss-$VERSION.zip -P /tmp \
+ && wget -q https://github.com/fossar/selfoss/releases/download/$VERSION/selfoss-$VERSION.zip -P /tmp \
  && CHECKSUM=$(sha256sum /tmp/selfoss-$VERSION.zip | awk '{print $1}') \
  && if [ "${CHECKSUM}" != "${SHA256_HASH}" ]; then echo "Warning! Checksum does not match!" && exit 1; fi \
  && mkdir /selfoss && unzip -q /tmp/selfoss-$VERSION.zip -d /selfoss \
