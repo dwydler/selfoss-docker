@@ -1,7 +1,13 @@
 FROM alpine:3.8
 
-LABEL description "Multipurpose rss reader, live stream, mashup, aggregation web application" \
-      maintainer="Hardware <contact@meshup.net>"
+LABEL maintainer="Daniel Wydler"
+LABEL org.opencontainers.image.authors="Daniel Wydler"
+LABEL org.opencontainers.image.description="Up-to-date Selfoss, a multipurpose RSS reader, live stream, mashup, aggregation web application. "
+LABEL org.opencontainers.image.documentation="https://github.com/dwydler/selfoss-docker/blob/master/README.md"
+LABEL org.opencontainers.image.source="https://github.com/dwydler/selfoss-docker"
+LABEL org.opencontainers.image.title="wydler/selfoss"
+LABEL org.opencontainers.image.url="https://github.com/dwydler/selfoss-docker"
+
 
 ARG VERSION=2.18
 ARG SHA256_HASH="0b3d46b0b25170f99e3e29c9fc6a2e5235b0449fecbdad902583c919724aa6ed"
