@@ -11,8 +11,8 @@ rm -f /selfoss/config.ini
 if [ -e /selfoss/data/config.ini ]; then
   cp /selfoss/data/config.ini /selfoss/config.ini
 else
-  cp /selfoss/defaults.ini /selfoss/data/config.ini
-  cp /selfoss/defaults.ini /selfoss/config.ini
+  cp "${SELFOSS_CONFIG_FILE:-/selfoss/config-example.ini}" /selfoss/data/config.ini
+  cp "${SELFOSS_CONFIG_FILE:-/selfoss/config-example.ini}" /selfoss/config.ini
 fi
 
 # Init data dir
