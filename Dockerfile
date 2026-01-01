@@ -52,7 +52,6 @@ RUN echo "@community http://nl.alpinelinux.org/alpine/v3.8/community" >> /etc/ap
  && CHECKSUM=$(sha256sum /tmp/selfoss-$VERSION.zip | awk '{print $1}') \
  && if [ "${CHECKSUM}" != "${SHA256_HASH}" ]; then echo "Warning! Checksum does not match!" && exit 1; fi \
  && mkdir /selfoss && unzip -q /tmp/selfoss-$VERSION.zip -d / \
- && sed -i -e 's/base_url=/base_url=\//g' /selfoss/defaults.ini \
  && apk del build-dependencies \
  && rm -rf /var/cache/apk/* /tmp/*
 
