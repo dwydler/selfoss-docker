@@ -18,7 +18,7 @@ fi
 
 # Init data dir
 if [ ! "$(ls -Ad /selfoss/data/*/)" ]; then
-   cd /selfoss/data/ && mkdir cache favicons logs sqlite thumbnails
+   cd /selfoss/data/ && mkdir cache favicons fulltextrss logs sqlite thumbnails
 fi
 
 # Set log output to STDOUT if wanted (LOG_TO_STDOUT=true)
