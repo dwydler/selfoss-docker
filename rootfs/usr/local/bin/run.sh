@@ -11,7 +11,7 @@ rm -f /selfoss/config.ini
 if [ ! -e /selfoss/data/config.ini ]; then
   cp "${SELFOSS_CONFIG_FILE:-/selfoss/config-example.ini}" /selfoss/data/config.ini
 
-  sed -i "s/lkjl1289/`cat \/dev\/urandom | tr -dc 'a-zA-Z' | fold -w 20 | head -n 1`/g" /selfoss/data/config.ini
+  sed -i "s/lkjl1289/`cat \/dev\/urandom | tr -dc 'a-zA-Z' | fold -w 50 | head -n 1`/g" /selfoss/data/config.ini
 fi
 
 cp /selfoss/data/config.ini /selfoss/config.ini
