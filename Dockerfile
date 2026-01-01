@@ -9,7 +9,7 @@ LABEL org.opencontainers.image.title="wydler/selfoss"
 LABEL org.opencontainers.image.url="https://github.com/dwydler/selfoss-docker"
 
 
-ARG VERSION=2.18
+ARG VERSION=2.19
 ARG SHA256_HASH="0b3d46b0b25170f99e3e29c9fc6a2e5235b0449fecbdad902583c919724aa6ed"
 
 ENV GID=991 UID=991 CRON_PERIOD=15m UPLOAD_MAX_SIZE=25M LOG_TO_STDOUT=false MEMORY_LIMIT=128M
