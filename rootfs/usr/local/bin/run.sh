@@ -2,8 +2,8 @@
 
 # Set cron period, attachment size limit and memory limit
 sed -i "s/<CRON_PERIOD>/$CRON_PERIOD/g" /services/cron/run
-sed -i "s/<UPLOAD_MAX_SIZE>/$UPLOAD_MAX_SIZE/g" /etc/php7/php-fpm.conf /etc/nginx/nginx.conf
-sed -i "s/<MEMORY_LIMIT>/$MEMORY_LIMIT/g" /etc/php7/php-fpm.conf
+sed -i "s/<UPLOAD_MAX_SIZE>/$UPLOAD_MAX_SIZE/g" /etc/php82/php-fpm.conf /etc/nginx/nginx.conf
+sed -i "s/<MEMORY_LIMIT>/$MEMORY_LIMIT/g" /etc/php82/php-fpm.conf
 
 # Selfoss custom configuration file
 rm -f /selfoss/config.ini
@@ -26,7 +26,7 @@ if [ "$LOG_TO_STDOUT" = true ]; then
   echo "[INFO] Logging to stdout activated"
   chmod o+w /dev/stdout
   sed -i "s/.*error_log.*$/error_log \/dev\/stdout warn;/" /etc/nginx/nginx.conf
-  sed -i "s/.*error_log.*$/error_log = \/dev\/stdout/" /etc/php7/php-fpm.conf
+  sed -i "s/.*error_log.*$/error_log = \/dev\/stdout/" /etc/php82/php-fpm.conf
 fi
 
 # Set permissions
