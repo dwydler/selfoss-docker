@@ -14,7 +14,7 @@ For more information visit the [web site](https://selfoss.aditu.de) of the proje
 - Based on Alpine Linux
 - Latest Selfoss version (2.19)
 - MySQL/MariaDB, PostgreSQL, SQLite driver
-- With Nginx and PHP7
+- With Nginx and PHP 8.2
 
 ## Build-time variables
 
