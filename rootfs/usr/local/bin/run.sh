@@ -6,15 +6,15 @@ sed -i "s/<UPLOAD_MAX_SIZE>/$UPLOAD_MAX_SIZE/g" /etc/php7/php-fpm.conf /etc/ngin
 sed -i "s/<MEMORY_LIMIT>/$MEMORY_LIMIT/g" /etc/php7/php-fpm.conf
 
 # Selfoss custom configuration file
-sed -i "s/lkjl1289/`cat \/dev\/urandom | tr -dc 'a-zA-Z' | fold -w 20 | head -n 1`/g" /selfoss/defaults.ini
 rm -f /selfoss/config.ini
 
-if [ -e /selfoss/data/config.ini ]; then
-  cp /selfoss/data/config.ini /selfoss/config.ini
-else
-  cp /selfoss/defaults.ini /selfoss/data/config.ini
-  cp /selfoss/defaults.ini /selfoss/config.ini
+if [ ! -e /selfoss/data/config.ini ]; then
+  cp "${SELFOSS_CONFIG_FILE:-/selfoss/config-example.ini}" /selfoss/data/config.ini
+
+  sed -i "s/lkjl1289/`cat \/dev\/urandom | tr -dc 'a-zA-Z0-9' | fold -w 50 | head -n 1`/g" /selfoss/data/config.ini
 fi
+
+cp /selfoss/data/config.ini /selfoss/config.ini
 
 # Init data dir
 if [ ! "$(ls -Ad /selfoss/data/*/)" ]; then

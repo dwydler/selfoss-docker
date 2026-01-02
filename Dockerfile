@@ -9,8 +9,8 @@ LABEL org.opencontainers.image.title="wydler/selfoss"
 LABEL org.opencontainers.image.url="https://github.com/dwydler/selfoss-docker"
 
 
-ARG VERSION=2.18
-ARG SHA256_HASH="0b3d46b0b25170f99e3e29c9fc6a2e5235b0449fecbdad902583c919724aa6ed"
+ARG VERSION=2.19
+ARG SHA256_HASH="e49c4750e9723277963ca699b602f09f9148e2b9f258fce6b14429498af0e4fc"
 
 ENV GID=991 UID=991 CRON_PERIOD=15m UPLOAD_MAX_SIZE=25M LOG_TO_STDOUT=false MEMORY_LIMIT=128M
 
@@ -51,8 +51,7 @@ RUN echo "@community http://nl.alpinelinux.org/alpine/v3.8/community" >> /etc/ap
  && wget -q https://github.com/fossar/selfoss/releases/download/$VERSION/selfoss-$VERSION.zip -P /tmp \
  && CHECKSUM=$(sha256sum /tmp/selfoss-$VERSION.zip | awk '{print $1}') \
  && if [ "${CHECKSUM}" != "${SHA256_HASH}" ]; then echo "Warning! Checksum does not match!" && exit 1; fi \
- && mkdir /selfoss && unzip -q /tmp/selfoss-$VERSION.zip -d /selfoss \
- && sed -i -e 's/base_url=/base_url=\//g' /selfoss/defaults.ini \
+ && mkdir /selfoss && unzip -q /tmp/selfoss-$VERSION.zip -d / \
  && apk del build-dependencies \
  && rm -rf /var/cache/apk/* /tmp/*
 
