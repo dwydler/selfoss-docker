@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:3.22.2
 
 LABEL maintainer="Daniel Wydler"
 LABEL org.opencontainers.image.authors="Daniel Wydler"
@@ -16,44 +16,31 @@ ENV GID=991 UID=991 CRON_PERIOD=15m UPLOAD_MAX_SIZE=25M LOG_TO_STDOUT=false MEMO
 
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
-RUN echo "@community http://nl.alpinelinux.org/alpine/v3.8/community" >> /etc/apk/repositories \
- && apk -U upgrade \
- && apk add -t build-dependencies \
-    wget \
-    git \
- && apk add \
-    musl \
-    nginx \
+RUN apk upgrade --no-cache \
+ && apk add --no-cache \
+    ca-certificates \
     s6 \
     su-exec \
-    libwebp \
-    ca-certificates \
-    php7@community \
-    php7-fpm@community \
-    php7-gd@community \
-    php7-json@community \
-    php7-zlib@community \
-    php7-xml@community \
-    php7-dom@community \
-    php7-curl@community \
-    php7-iconv@community \
-    php7-mcrypt@community \
-    php7-pdo_mysql@community \
-    php7-pdo_pgsql@community \
-    php7-pdo_sqlite@community \
-    php7-ctype@community \
-    php7-session@community \
-    php7-mbstring@community \
-    php7-simplexml@community \
-    php7-xml \
-    php7-xmlwriter \
-    tini@community \
+    nginx \
+    php82 \
+    php82-fpm \
+    php82-gd \
+    php82-curl \
+    php82-mbstring \
+    php82-tidy \
+    php82-session \
+    php82-xml \
+    php82-simplexml \
+    php82-xmlwriter \
+    php82-pecl-imagick \
+    php82-pdo_mysql \
+    php82-pdo_pgsql \
+    php82-pdo_sqlite \
  && wget -q https://github.com/fossar/selfoss/releases/download/$VERSION/selfoss-$VERSION.zip -P /tmp \
  && CHECKSUM=$(sha256sum /tmp/selfoss-$VERSION.zip | awk '{print $1}') \
  && if [ "${CHECKSUM}" != "${SHA256_HASH}" ]; then echo "Warning! Checksum does not match!" && exit 1; fi \
  && mkdir /selfoss && unzip -q /tmp/selfoss-$VERSION.zip -d / \
- && apk del build-dependencies \
- && rm -rf /var/cache/apk/* /tmp/*
+ && rm -rf /tmp/*
 
 COPY rootfs /
 RUN chmod +x /usr/local/bin/run.sh /services/*/run /services/.s6-svscan/*
