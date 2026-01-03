@@ -33,4 +33,4 @@ fi
 chown -R $UID:$GID /selfoss /services /var/log /var/lib/nginx
 
 # RUN !
-exec su-exec $UID:$GID /bin/s6-svscan /services
+exec su-exec $UID:$GID /usr/bin/s6-svscan /services
