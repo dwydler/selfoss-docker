@@ -17,7 +17,7 @@ fi
 cp /selfoss/data/config.ini /selfoss/config.ini
 
 # Init data dir
-if [ ! "$(ls -Ad /selfoss/data/*/)" ]; then
+if [ ! "$(ls -Ad /selfoss/data/*/ 2>/dev/null)" ]; then
    cd /selfoss/data/ && mkdir cache favicons fulltextrss logs sqlite thumbnails
 fi
 
