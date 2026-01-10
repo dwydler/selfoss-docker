@@ -17,8 +17,12 @@ fi
 cp /selfoss/data/config.ini /selfoss/config.ini
 
 # Init data dir
-if [ ! "$(ls -Ad /selfoss/data/*/)" ]; then
-   cd /selfoss/data/ && mkdir cache favicons fulltextrss logs sqlite thumbnails
+if [ ! "$(ls -Ad /selfoss/data/*/ 2>/dev/null)" ]; then
+
+  echo "[INFO] First launch of the web app. Create the necessary directories."
+  cd /selfoss/data/ && mkdir cache favicons fulltextrss logs sqlite thumbnails
+else
+  echo "[INFO] The application has already been initialized. No further action required." 
 fi
 
 # Set log output to STDOUT if wanted (LOG_TO_STDOUT=true)
