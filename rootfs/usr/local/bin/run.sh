@@ -4,7 +4,7 @@
 sed -i "s/<CRON_PERIOD>/$CRON_PERIOD/g" /services/cron/run
 sed -i "s/<UPLOAD_MAX_SIZE>/$UPLOAD_MAX_SIZE/g" /etc/php82/conf.d/99_custom.ini /etc/nginx/nginx.conf
 sed -i "s/<MEMORY_LIMIT>/$MEMORY_LIMIT/g" /etc/php82/conf.d/99_custom.ini
-sed -i "s/<DATE_TIMEZONE>/$DATE_TIMEZONE/g" /etc/php82/conf.d/99_custom.ini
+sed -i "s#<DATE_TIMEZONE>#$DATE_TIMEZONE#g" /etc/php82/conf.d/99_custom.ini
 
 # Selfoss custom configuration file
 rm -f /selfoss/config.ini
