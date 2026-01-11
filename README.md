@@ -35,7 +35,7 @@ For more information visit the [web site](https://selfoss.aditu.de) of the proje
 | **UPLOAD_MAX_SIZE** | Attachment size limit | *optional* | 25M
 | **LOG_TO_STDOUT** | Enable nginx and php error logs to stdout | *optional* | false
 | **MEMORY_LIMIT** | PHP memory limit | *optional* | 128M
-| **DATE_TIMEZONE** | [PHP date timezone](https://www.php.net/manual/en/timezones.php) | *optional* | UTC
+| **TIMEZONE** | [PHP date timezone](https://www.php.net/manual/en/timezones.php) | *optional* | UTC
 
 ## Usage
 The simplest way to run the container is the following command:
@@ -64,7 +64,7 @@ services:
     environment:
       UID: "1048"
       GID: "65550"
-      DATE_TIMEZONE: "Europe/Berlin"
+      TIMEZONE: "Europe/Berlin"
 ```
 
 ## Credits
