@@ -64,6 +64,7 @@ services:
     environment:
       UID: "1048"
       GID: "65550"
+      DATE_TIMEZONE: "Europe/Berlin"
 ```
 
 ## Credits
