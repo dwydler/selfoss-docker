@@ -1,0 +1,9 @@
+/selfoss/data/logs/*.log {
+    rotate 9
+	size 1k
+    missingok
+    notifempty
+    compress
+    delaycompress
+    copytruncate
+}
