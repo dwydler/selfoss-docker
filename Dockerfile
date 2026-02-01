@@ -19,6 +19,8 @@ SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 RUN apk upgrade --no-cache \
  && apk add --no-cache \
     logrotate \
+    busybox-suid \
+    libcap \
     ca-certificates \
     s6 \
     su-exec \
@@ -41,6 +43,9 @@ RUN apk upgrade --no-cache \
  && CHECKSUM=$(sha256sum /tmp/selfoss-$VERSION.zip | awk '{print $1}') \
  && if [ "${CHECKSUM}" != "${SHA256_HASH}" ]; then echo "Warning! Checksum does not match!" && exit 1; fi \
  && mkdir /selfoss && unzip -q /tmp/selfoss-$VERSION.zip -d / \
+ && setcap cap_setgid=ep /bin/busybox \
+ && rm /etc/logrotate.d/* \
+ && rm  /etc/crontabs/root \
  && rm -rf /tmp/*
 
 COPY rootfs /
