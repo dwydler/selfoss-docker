@@ -37,5 +37,9 @@ fi
 # Set permissions
 chown -R $UID:$GID /selfoss /services /var/log /var/lib/nginx
 
+# Set permissions for cron file
+chown root:selfoss /etc/crontabs/selfoss
+chmod 755 /etc/crontabs/selfoss
+
 # RUN !
 exec su-exec $UID:$GID /usr/bin/s6-svscan /services
