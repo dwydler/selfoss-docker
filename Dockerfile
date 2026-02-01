@@ -16,6 +16,9 @@ ENV GID=991 UID=991 CRON_PERIOD=15m UPLOAD_MAX_SIZE=25M LOG_TO_STDOUT=false MEMO
 
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
+# https://forums.docker.com/t/run-crond-as-non-root-user-on-alpine-linux/32644
+# https://github.com/gliderlabs/docker-alpine/issues/381
+# https://github.com/inter169/systs/blob/master/alpine/crond/README.md
 RUN apk upgrade --no-cache \
  && apk add --no-cache \
     logrotate \
