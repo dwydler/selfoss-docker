@@ -1,5 +1,5 @@
 /selfoss/data/logs/*.log {
-    rotate 31
+    rotate <LOGROTATE_RETENTION>
     daily
     missingok
     notifempty

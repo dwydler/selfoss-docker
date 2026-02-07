@@ -18,6 +18,10 @@ sed -i "s/<UPLOAD_MAX_SIZE>/$UPLOAD_MAX_SIZE/g" /etc/php82/conf.d/99_custom.ini 
 sed -i "s/<MEMORY_LIMIT>/$MEMORY_LIMIT/g" /etc/php82/conf.d/99_custom.ini
 sed -i "s#<DATE_TIMEZONE>#$TIMEZONE#g" /etc/php82/conf.d/99_custom.ini
 
+# Set how many log files should be kept
+sed -i "s#<LOGROTATE_RETENTION>#$LOGROTATE_RETENTION#g" /etc/logrotate.d/selfoss
+
+
 # Selfoss custom configuration file
 rm -f /selfoss/config.ini
 
