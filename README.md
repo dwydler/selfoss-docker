@@ -36,6 +36,7 @@ For more information visit the [web site](https://selfoss.aditu.de) of the proje
 | **LOG_TO_STDOUT** | Enable nginx and php error logs to stdout | *optional* | false
 | **MEMORY_LIMIT** | PHP memory limit | *optional* | 128M
 | **TIMEZONE** | [PHP date timezone](https://www.php.net/manual/en/timezones.php) | *optional* | UTC
+| **LOGROTATE_RETENTION** | Number of log files to be retained | *optional* | 31
 
 ## Usage
 The simplest way to run the container is the following command:

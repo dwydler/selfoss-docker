@@ -12,12 +12,18 @@ LABEL org.opencontainers.image.url="https://github.com/dwydler/selfoss-docker"
 ARG VERSION=2.19
 ARG SHA256_HASH="e49c4750e9723277963ca699b602f09f9148e2b9f258fce6b14429498af0e4fc"
 
-ENV GID=991 UID=991 CRON_PERIOD=15m UPLOAD_MAX_SIZE=25M LOG_TO_STDOUT=false MEMORY_LIMIT=128M TIMEZONE=UTC
+ENV GID=991 UID=991 CRON_PERIOD=15m UPLOAD_MAX_SIZE=25M LOG_TO_STDOUT=false MEMORY_LIMIT=128M TIMEZONE=UTC LOGROTATE_RETENTION=31
 
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
+# https://forums.docker.com/t/run-crond-as-non-root-user-on-alpine-linux/32644
+# https://github.com/gliderlabs/docker-alpine/issues/381
+# https://github.com/inter169/systs/blob/master/alpine/crond/README.md
 RUN apk upgrade --no-cache \
  && apk add --no-cache \
+    logrotate \
+    busybox-suid \
+    libcap \
     ca-certificates \
     s6 \
     su-exec \
@@ -40,6 +46,9 @@ RUN apk upgrade --no-cache \
  && CHECKSUM=$(sha256sum /tmp/selfoss-$VERSION.zip | awk '{print $1}') \
  && if [ "${CHECKSUM}" != "${SHA256_HASH}" ]; then echo "Warning! Checksum does not match!" && exit 1; fi \
  && mkdir /selfoss && unzip -q /tmp/selfoss-$VERSION.zip -d / \
+ && setcap cap_setgid=ep /bin/busybox \
+ && rm /etc/logrotate.d/* \
+ && rm  /etc/crontabs/root \
  && rm -rf /tmp/*
 
 COPY rootfs /

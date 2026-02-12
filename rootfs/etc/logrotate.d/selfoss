@@ -1,0 +1,9 @@
+/selfoss/data/logs/*.log {
+    rotate <LOGROTATE_RETENTION>
+    daily
+    missingok
+    notifempty
+    compress
+    delaycompress
+    copytruncate
+}
