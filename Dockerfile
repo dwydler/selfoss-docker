@@ -38,6 +38,7 @@ RUN apk upgrade --no-cache \
     php82-xml \
     php82-simplexml \
     php82-xmlwriter \
+    php82-dom \
     php82-pecl-imagick \
     php82-pdo_mysql \
     php82-pdo_pgsql \
