@@ -38,10 +38,14 @@ RUN apk upgrade --no-cache \
     php82-xml \
     php82-simplexml \
     php82-xmlwriter \
+    php82-dom \
     php82-pecl-imagick \
     php82-pdo_mysql \
     php82-pdo_pgsql \
     php82-pdo_sqlite \
+    php82-iconv \
+    php82-tokenizer \
+    php82-xmlreader \
  && wget -q https://github.com/fossar/selfoss/releases/download/$VERSION/selfoss-$VERSION.zip -P /tmp \
  && CHECKSUM=$(sha256sum /tmp/selfoss-$VERSION.zip | awk '{print $1}') \
  && if [ "${CHECKSUM}" != "${SHA256_HASH}" ]; then echo "Warning! Checksum does not match!" && exit 1; fi \
