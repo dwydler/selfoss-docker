@@ -1,3 +1,28 @@
+############################
+# Stage 1: Builder
+############################
+FROM alpine:3.22.2 AS builder
+
+ARG VERSION=2.19
+ARG SHA256_HASH="e49c4750e9723277963ca699b602f09f9148e2b9f258fce6b14429498af0e4fc"
+
+SHELL ["/bin/ash", "-o", "pipefail", "-c"]
+
+# Build dependencies (nur temporär)
+RUN apk add --no-cache wget unzip ca-certificates
+
+WORKDIR /tmp/selfoss
+
+# Selfoss herunterladen + checksum prüfen
+RUN wget -q https://github.com/fossar/selfoss/releases/download/${VERSION}/selfoss-${VERSION}.zip -O selfoss.zip \
+    && echo "${SHA256_HASH}  selfoss.zip" | sha256sum -c - \
+    && unzip -q selfoss.zip -d . \
+    && mv selfoss /selfoss \
+    && rm -rf *
+
+############################
+# Stage 2: Runtime
+############################
 FROM alpine:3.22.2
 
 ############################
@@ -14,9 +39,6 @@ LABEL maintainer="Daniel Wydler" \
 ############################
 # Arguments & Environment
 ############################
-ARG VERSION=2.19
-ARG SHA256_HASH="e49c4750e9723277963ca699b602f09f9148e2b9f258fce6b14429498af0e4fc"
-
 ENV GID=991 \
     UID=991 \
     CRON_PERIOD=15m \
@@ -29,7 +51,7 @@ ENV GID=991 \
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
 ############################
-# Runtime Dependencies
+# Runtime dependencies
 ############################
 # https://forums.docker.com/t/run-crond-as-non-root-user-on-alpine-linux/32644
 # https://github.com/gliderlabs/docker-alpine/issues/381
@@ -62,27 +84,20 @@ RUN apk add --no-cache \
         php82-xmlreader
 
 ############################
-# Selfoss Download (isolated layer)
+# Selfoss kopieren
 ############################
-RUN apk add --no-cache --virtual .build-deps \
-        wget \
-        unzip \
-    && wget -q https://github.com/fossar/selfoss/releases/download/${VERSION}/selfoss-${VERSION}.zip -P /tmp \
-    && echo "${SHA256_HASH}  /tmp/selfoss-${VERSION}.zip" | sha256sum -c - \
-    && unzip -q /tmp/selfoss-${VERSION}.zip -d / \
-    && mkdir -p /selfoss/data \
-    && rm -rf /tmp/* \
-    && apk del .build-deps
+COPY --from=builder /selfoss /selfoss
+RUN mkdir -p /selfoss/data
 
 ############################
-# Security Adjustments
+# Security adjustments
 ############################
 RUN setcap cap_setgid=ep /bin/busybox \
     && rm -rf /etc/logrotate.d/* \
     && rm -f /etc/crontabs/root
 
 ############################
-# RootFS
+# RootFS & Permissions
 ############################
 COPY rootfs /
 RUN chmod +x /usr/local/bin/run.sh /services/*/run /services/.s6-svscan/*
