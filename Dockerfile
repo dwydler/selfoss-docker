@@ -32,7 +32,6 @@ RUN ln -s $(which php82) /usr/bin/php \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && git clone https://github.com/fossar/selfoss.git . \
     && npm install && npm run build \
-    && rm -rf ./*
 
 ############################
 # Stage 2: Runtime
