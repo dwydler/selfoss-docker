@@ -10,6 +10,8 @@ RUN apk add --no-cache \
         ca-certificates \
         php82 \
         php82-phar \
+        php82-iconv \
+        php82-mbstring \
         curl \
         npm \
         git
