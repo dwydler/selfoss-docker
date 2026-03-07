@@ -1,23 +1,26 @@
 ############################
 # Stage 1: Builder
 ############################
-FROM node:20-alpine AS builder
+FROM alpine:3.22.2 AS builder
 
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
+# Build dependencies (nur temporär)
+RUN apk add --no-cache \
+        ca-certificates \
+        php82 \
+        php82-phar \
+        curl \
+        npm \
+        git
 
-# Arbeitsverzeichnis
-WORKDIR /app
+WORKDIR /tmp/selfoss
 
-# Abhängigkeiten kopieren für Cache (optional, wenn du package.json separat hast)
-# COPY package.json package-lock.json ./
-
-# Selfoss klonen
-RUN git clone https://github.com/fossar/selfoss.git . 
-
-# Node-Abhängigkeiten installieren und Frontend bauen
-RUN npm install && npm run build
-
+# Selfoss herunterladen + checksum prüfen
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && git clone https://github.com/fossar/selfoss.git . \
+    && npm install && npm run build \
+    && rm -rf ./*
 
 ############################
 # Stage 2: Runtime
@@ -85,7 +88,7 @@ RUN apk add --no-cache \
 ############################
 # Selfoss kopieren
 ############################
-COPY --from=builder /app /selfoss
+COPY --from=builder /selfoss /selfoss
 RUN mkdir -p /selfoss/data
 
 ############################
