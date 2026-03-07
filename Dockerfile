@@ -100,7 +100,7 @@ RUN apk add --no-cache \
 ############################
 # Selfoss kopieren
 ############################
-COPY --from=builder /selfoss /selfoss
+COPY --from=builder /tmp/selfoss /selfoss
 RUN mkdir -p /selfoss/data
 
 ############################
