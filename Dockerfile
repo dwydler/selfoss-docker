@@ -19,6 +19,8 @@ RUN apk add --no-cache \
         php82-dom \
         php82-session \
         php82-tokenizer \
+        php82-tidy \
+        php82-xmlreader \
         curl \
         npm \
         git
