@@ -1,24 +1,23 @@
 ############################
 # Stage 1: Builder
 ############################
-FROM alpine:3.22.2 AS builder
-
-ARG VERSION=2.20-f837ee6
-ARG SHA256_HASH="85c992ca02229f43466d4d316720194855931d1c426a64a2c08487e3dc49353d"
+FROM node:20-alpine AS builder
 
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
-# Build dependencies (nur temporär)
-RUN apk add --no-cache wget unzip ca-certificates
 
-WORKDIR /tmp/selfoss
+# Arbeitsverzeichnis
+WORKDIR /app
 
-# Selfoss herunterladen + checksum prüfen
-RUN wget -q https://dl.cloudsmith.io/public/fossar/selfoss-git/raw/names/selfoss.zip/versions/${VERSION}/selfoss-${VERSION}.zip -O selfoss.zip \
-    && echo "${SHA256_HASH}  selfoss.zip" | sha256sum -c - \
-    && unzip -q selfoss.zip -d . \
-    && mv selfoss /selfoss \
-    && rm -rf ./*
+# Abhängigkeiten kopieren für Cache (optional, wenn du package.json separat hast)
+# COPY package.json package-lock.json ./
+
+# Selfoss klonen
+RUN git clone https://github.com/fossar/selfoss.git . 
+
+# Node-Abhängigkeiten installieren und Frontend bauen
+RUN npm install && npm run build
+
 
 ############################
 # Stage 2: Runtime
@@ -86,7 +85,7 @@ RUN apk add --no-cache \
 ############################
 # Selfoss kopieren
 ############################
-COPY --from=builder /selfoss /selfoss
+COPY --from=builder /app /selfoss
 RUN mkdir -p /selfoss/data
 
 ############################
