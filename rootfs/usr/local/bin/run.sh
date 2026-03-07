@@ -31,13 +31,13 @@ cp /selfoss/data/config.ini /selfoss/config.ini
 # Ensure required directories exist
 ########################################
 
-if [ ! "$(ls -Ad /selfoss/data/*/ 2>/dev/null)" ]; then
-
-  echo "[INFO] First launch of the web app. Create the necessary directories."
-  cd /selfoss/data/ && mkdir cache favicons fulltextrss logs sqlite thumbnails
-else
-  echo "[INFO] The application has already been initialized. No further action required." 
-fi
+mkdir -p \
+  /selfoss/data/cache \
+  /selfoss/data/favicons \
+  /selfoss/data/fulltextrss \
+  /selfoss/data/logs \
+  /selfoss/data/sqlite \
+  /selfoss/data/thumbnails
 
 ########################################
 # Logging to stdout (optional)
