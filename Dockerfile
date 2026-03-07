@@ -12,7 +12,7 @@ RUN apk add --no-cache \
         php82-phar \
         php82-iconv \
         php82-mbstring \
-        php82-openss \
+        php82-openssl \
         curl \
         npm \
         git
