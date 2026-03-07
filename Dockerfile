@@ -13,6 +13,7 @@ RUN apk add --no-cache \
         php82-iconv \
         php82-mbstring \
         php82-openssl \
+        php82-gd \
         curl \
         npm \
         git
