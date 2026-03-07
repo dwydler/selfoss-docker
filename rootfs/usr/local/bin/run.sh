@@ -22,7 +22,9 @@ rm -f /selfoss/config.ini
 if [ ! -e /selfoss/data/config.ini ]; then
   cp "${SELFOSS_CONFIG_FILE:-/selfoss/config-example.ini}" /selfoss/data/config.ini
 
-  sed -i "s/lkjl1289/`cat \/dev\/urandom | tr -dc 'a-zA-Z0-9' | fold -w 50 | head -n 1`/g" /selfoss/data/config.ini
+  # Generate random secret (50 chars)
+  SECRET="$(tr -dc A-Za-z0-9 < /dev/urandom | head -c 50)"
+  sed -i "s/lkjl1289/${SECRET}/g" /selfoss/data/config.ini
 fi
 
 cp /selfoss/data/config.ini /selfoss/config.ini
