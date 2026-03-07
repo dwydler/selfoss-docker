@@ -14,6 +14,11 @@ RUN apk add --no-cache \
         php82-mbstring \
         php82-openssl \
         php82-gd \
+        php82-xml \
+        php82-curl \
+        php82-dom \
+        php82-session \
+        php82-tokenizer \
         curl \
         npm \
         git
