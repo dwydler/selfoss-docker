@@ -113,4 +113,8 @@ RUN chmod +x /usr/local/bin/run.sh /services/*/run /services/.s6-svscan/*
 ############################
 VOLUME /selfoss/data
 EXPOSE 8888
-CMD ["run.sh"]
+
+############################
+# Entrypoint
+############################
+ENTRYPOINT ["/usr/local/bin/run.sh"]
