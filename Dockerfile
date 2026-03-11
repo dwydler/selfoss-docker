@@ -3,22 +3,35 @@
 ############################
 FROM alpine:3.22.2 AS builder
 
-ARG VERSION=2.20-f837ee6
-ARG SHA256_HASH="85c992ca02229f43466d4d316720194855931d1c426a64a2c08487e3dc49353d"
-
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
 # Build dependencies (nur temporär)
-RUN apk add --no-cache wget unzip ca-certificates
+RUN apk add --no-cache \
+        ca-certificates \
+        php82 \
+        php82-phar \
+        php82-iconv \
+        php82-mbstring \
+        php82-openssl \
+        php82-gd \
+        php82-xml \
+        php82-curl \
+        php82-dom \
+        php82-session \
+        php82-tokenizer \
+        php82-tidy \
+        php82-xmlreader \
+        curl \
+        npm \
+        git
 
 WORKDIR /tmp/selfoss
 
 # Selfoss herunterladen + checksum prüfen
-RUN wget -q https://dl.cloudsmith.io/public/fossar/selfoss-git/raw/names/selfoss.zip/versions/${VERSION}/selfoss-${VERSION}.zip -O selfoss.zip \
-    && echo "${SHA256_HASH}  selfoss.zip" | sha256sum -c - \
-    && unzip -q selfoss.zip -d . \
-    && mv selfoss /selfoss \
-    && rm -rf ./*
+RUN ln -s $(which php82) /usr/bin/php \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && git clone https://github.com/fossar/selfoss.git . \
+    && npm install && npm run build
 
 ############################
 # Stage 2: Runtime
@@ -86,8 +99,14 @@ RUN apk add --no-cache \
 ############################
 # Selfoss kopieren
 ############################
-COPY --from=builder /selfoss /selfoss
+COPY --from=builder /tmp/selfoss /selfoss
 RUN mkdir -p /selfoss/data
+
+############################
+# Non-root user
+############################
+RUN addgroup -S selfoss -g $GID \
+    && adduser -S selfoss -u $UID -G selfoss -s /bin/sh
 
 ############################
 # Security adjustments
