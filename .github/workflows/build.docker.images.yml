@@ -5,9 +5,9 @@ name: Build & publish docker images
   workflow_dispatch:
     inputs:
       softwarebuild:
-        type: choice 
+        type: choice
         required: false
-        options: 
+        options:
           - release
           - snapshot
         default: "release"
@@ -25,7 +25,7 @@ env:
   REGISTRY_REPO: ${{ vars.REGISTRY_REPO }}
   REGISTRY_REPO_TAG_CACHE_NAME: ${{ vars.REGISTRY_REPO_TAG_CACHE_NAME }}
   REGISTRY_PLATFORMS: ${{ vars.REGISTRY_PLATFORMS }}
-  
+
   SOFTWARE_BUILD: ${{ github.event.inputs.softwarebuild  || 'release' }}
 
 jobs:
