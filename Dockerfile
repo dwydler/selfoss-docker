@@ -1,7 +1,7 @@
 ############################
 # Stage 1: Builder
 ############################
-FROM alpine:3.22.2 AS builder
+FROM alpine:3.22.3 AS builder
 
 ARG APP_FILE_HASH
 ARG APP_DL_PATH
@@ -23,7 +23,7 @@ RUN wget -q ${APP_DL_PATH} -O selfoss.zip \
 ############################
 # Stage 2: Runtime
 ############################
-FROM alpine:3.22.2
+FROM alpine:3.22.3
 
 ############################
 # Metadata
