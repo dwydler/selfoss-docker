@@ -37,6 +37,7 @@
       ],
       versioning: 'docker',
       rangeStrategy: 'pin',
+      pinDigests: true,
       labels: [
         'dependencies',
         'docker',
