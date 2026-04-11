@@ -26,7 +26,7 @@ env:
   REGISTRY_REPO: ${{ vars.REGISTRY_REPO }}
   REGISTRY_REPO_TAG_CACHE_NAME: ${{ vars.REGISTRY_REPO_TAG_CACHE_NAME }}
   REGISTRY_PLATFORMS: ${{ vars.REGISTRY_PLATFORMS }}
-  
+
   SOFTWARE_BUILD: ${{ github.event.inputs.softwarebuild  || 'release' }}
 
 jobs:
@@ -95,7 +95,7 @@ jobs:
           # https://stackoverflow.com/questions/3294072/get-last-dirname-filename-in-a-file-path-argument-in-bash
           container_tag=$(basename ${{ github.ref_name }})
           echo $container_tag
-          
+
           if [ "${{ github.event.release.prerelease }}" = true ]; then
             echo "docker=${{ env.REGISTRY_ACCOUNT }}/${{ env.REGISTRY_REPO }}:$container_tag" >> $GITHUB_OUTPUT
 
@@ -106,7 +106,7 @@ jobs:
             echo "docker=${{ env.REGISTRY_ACCOUNT }}/${{ env.REGISTRY_REPO }}:${{ steps.selfoss.outputs.VERSION }}" >> $GITHUB_OUTPUT
 
           elif [ "${{ env.SOFTWARE_BUILD }}" == "compose" ]; then
-            echo "docker=${{ env.REGISTRY_ACCOUNT }}/${{ env.REGISTRY_REPO }}:master-compose" >> $GITHUB_OUTPUT            
+            echo "docker=${{ env.REGISTRY_ACCOUNT }}/${{ env.REGISTRY_REPO }}:master-compose" >> $GITHUB_OUTPUT
 
           else
             echo "docker=${{ env.REGISTRY_ACCOUNT }}/${{ env.REGISTRY_REPO }}:$container_tag" >> $GITHUB_OUTPUT
@@ -138,7 +138,7 @@ jobs:
           tags: ${{ steps.tags.outputs.docker }}
           platforms: ${{ env.REGISTRY_PLATFORMS }}
           cache-from: type=registry,ref=${{ env.REGISTRY_ACCOUNT }}/${{ env.REGISTRY_REPO }}:${{ env.REGISTRY_REPO_TAG_CACHE_NAME }}
-          cache-to: type=registry,ref=${{ env.REGISTRY_ACCOUNT }}/${{ env.REGISTRY_REPO }}:${{ env.REGISTRY_REPO_TAG_CACHE_NAME }},mode=max          
+          cache-to: type=registry,ref=${{ env.REGISTRY_ACCOUNT }}/${{ env.REGISTRY_REPO }}:${{ env.REGISTRY_REPO_TAG_CACHE_NAME }},mode=max
 
       - name: Update Docker Repository Description
         uses: peter-evans/dockerhub-description@1b9a80c056b620d92cedb9d9b5a223409c68ddfa  # v5.0.0
